@@ -1,0 +1,826 @@
+@font-face {
+  font-family: 'Muller';                                 /*объявляет название шрифта*/
+  src:
+    local('Muller Bold'),                               /*браузер сначала ищет шрифт на компьютере пользователя (вдруг повезет!?)*/
+    local('Muller-Bold'),
+    url('../fonts/MullerBold.woff2') format('woff2'),    /*загружает шрифт в лучшем формате wolf2*/
+    url('../fonts/MullerBold.woff') format('woff');      /*загружает шрифт в формате wolf если wolf2 не загрузился или не поддерживается браузером*/
+  font-weight: 700;                                      /*определяет начнртание шрифта (жирность :))*/
+  font-style: normal;                                    /*определяет стиль (наклонность)*/
+  font-display: swap;          /*определяет стратегию загрузки, в данном случае не задаётся период блокировки и задаётся бесконечный период подмены.*/
+}
+@font-face {
+  font-family: 'Muller';
+  src:
+    local('Muller Medium'),
+    local('Muller-Medium'),
+    url('../fonts/MullerMedium.woff2') format('woff2'),
+    url('../fonts/MullerMedium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Muller';
+  src:
+    local('Muller Regular'),
+    local('Muller-Regular'),
+    url('../fonts/MullerRegular.woff2') format('woff2'),
+    url('../fonts/MullerRegular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Muller';
+  src:
+    local('Muller Light'),
+    local('Muller-Light'),
+    url('../fonts/MullerLight.woff2') format('woff2'),
+    url('../fonts/MullerLight.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+                            /* Здесь можно настроить анимацию */
+:root {
+  --color-hover: hsla(40, 60%, 50%, 1); /*цвет кнопки под курсором*/
+  --color-focus: hsla(40, 60%, 50%, 1); /*цвет кнопки в фокусе*/
+  --color-active: hsla(40, 80%, 36%, 1); /*цвет нажатой кнопки*/
+  --duration: 250ms;                       /*время анимации кнопок*/
+  --transX: 2px;                           /*сдвиг по X*/
+  --transY: -4px;                          /*сдвиг по Y*/
+  --function: linear;                      /*функция анимации*/
+  --color-lighth-hover: hsla(40, 71%, 69%, 1); /*цвет ссылки под курсором (светлая тема)*/
+  --color-shadow: hsla(0, 0%, 50%, 0.8);        /*цвет тени*/
+  --grad: linear-gradient(45deg, rgba(48, 64, 89, 0.84) -2.9%, rgba(53, 65, 83, 0) 65.7%); /*градиент заливки фона*/
+}
+
+html {
+	box-sizing: border-box;
+}
+*,
+*::before,
+*::after {
+	box-sizing: inherit;
+}
+a {
+	color: inherit;
+	text-decoration: none;
+}
+img {
+	max-width: 100%;
+}
+body {
+  min-width: 1200px;
+  font-family: 'Muller', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  background: #F1F1F1;
+}
+h1, h2, h3, p, figure, ul, ol {
+  margin: 0;
+}
+.visually-hidden {
+  position: absolute;
+  clip: rect(0 0 0 0);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+}
+.list-reset {               /*сброс стилей для списков*/
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.btn-reset {               /*сброс стилей для кнопок*/
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+fieldset, select, input, option {     /*сброс стилей для fieldset*/
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+legend {
+  display: table;
+  float: left;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+address {                    /*сброс стилей для address*/
+  font-style: inherit;
+}
+                              /*общие стили*/
+.flex {
+  display: flex;
+}
+.container {
+  width: 1200px;
+  padding: 0 15px;
+  margin: auto;
+}
+.section-margin {
+  margin-bottom: 70px;
+}
+.btnstyle {           /*тема для кнопок и ссылок, оформленных как кнопки*/
+  display: inline-block;
+  background-color: transparent;
+  cursor: pointer;
+  padding: 13px 20px;
+  font-size: 16px;
+  line-height: 16px;
+  color: #CC9933;
+  border: 1px solid #CC9933;
+  border-radius: 10px;
+  transition:
+    background-color var(--duration) var(--function),
+    transform  var(--duration) var(--function),
+    color  var(--duration) var(--function),
+    box-shadow  var(--duration) var(--function);
+}
+.btnstyle:hover,
+.btnstyle:focus,
+.btnstyle:active {
+  color: #FFF;
+}
+.btnstyle:hover {
+  background-color: var(--color-hover);
+  transform: translate(var(--transX), var(--transY));
+  box-shadow: -3px 5px 5px 0 var(--color-shadow);
+}
+.btnstyle:focus,
+.btnstyle:focus-visible {
+  background-color: var(--color-focus);
+  box-shadow: -3px 5px 5px 0 var(--color-shadow);
+  outline: none;
+}
+.btnstyle:active {
+  background-color: var(--color-active);
+  transform: none;
+  box-shadow: none;
+}
+                                /*темная тема для ссылок*/
+.lnstyle {
+  transition:
+    color  var(--duration) var(--function),
+    filter  var(--duration) var(--function),
+    outline var(--duration) var(--function);
+}
+.lnstyle:hover {
+  color: var(--color-hover);
+  filter: drop-shadow(0 0 25px #666) saturate(150%);
+}
+.lnstyle:focus,
+.lnstyle:focus-visible {
+  color: var(--color-focus);
+  outline: 1px solid var(--color-focus);
+}
+.lnstyle:active {
+  color: var(--color-active);
+  filter: saturate(80%);
+  outline: none;
+  }
+                                    /*светлая тема для ссылок*/
+.lnstyle-light {
+  transition:
+    color  var(--duration) var(--function),
+    outline var(--duration) var(--function);
+}
+.lnstyle-light:hover {
+  color: var(--color-lighth-hover);
+}
+.lnstyle-light:focus,
+.lnstyle-light:focus-visible {
+  color: var(--color-focus);
+  outline: none;
+}
+.lnstyle-light:active {
+  color: var(--color-active);
+  outline: none;
+}
+                            /*стили для карточек*/
+.cardstyle {
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform  var(--duration) var(--function),
+    box-shadow  var(--duration) var(--function);
+}
+ /*затенение карточки*/
+.cardstyle::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  background: var(--grad);
+}
+    /*анимация карточки*/
+.cardstyle:hover {
+  transform: translate(var(--transX), var(--transY));
+  box-shadow: -3px 5px 5px 0 var(--color-shadow);
+}
+.cardstyle:hover::before {
+  background: transparent;
+}
+.cardstyle:active {
+  transform: none;
+  box-shadow: none;
+}
+
+.section-heading {          /*h2*/
+  margin-left: 40px;
+  margin-bottom: 20px;
+  font-weight: normal;
+  font-size: 40px;
+  line-height: 40px;
+  color: #333;
+}
+.section-text {             /*простой текст*/
+  font-size: 16px;
+  line-height: 200%;
+}
+
+/*---------------------------------------------------------------------------------------------*/
+                                  /*header*/
+.header {
+  margin-top: 15px;
+}
+.container-header {
+  flex-direction: column;
+}
+.header-top {
+  min-height: 84px;
+  margin-bottom: 15px;
+  align-items: center;
+  justify-content: space-between;
+}
+.header-left {
+  align-items: center;
+}
+.header-logo-img {
+  margin-right: 40px;
+  border-radius: 15px;
+  overflow: hidden;
+}
+.header-telephone-link {
+  max-width: 450px;
+  padding: 10px 10px;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 20px;
+  color: #666;
+}
+.header-account-btn {
+  max-width: 450px;
+  padding: 10px 10px;
+  padding-left: 29px;
+  font-size: 16px;
+  line-height: 16px;
+  color: #CC9933;
+  background-image: url(../img/Header-arrow.svg);
+  background-position: left center;
+  background-repeat: no-repeat;
+  background-size: 24px 24px;
+}
+.nav {
+  width: 1170px;
+  min-height: 70px;
+  align-items: center;
+  justify-content: space-between;
+  background: #FFF;
+  border-radius: 15px;
+}
+.nav-left-list {
+  width: 743px;
+  min-height: 70px;
+  padding: 10px;
+  align-items: center;
+  justify-content: space-evenly;
+  background-image: url(../img/Nav_line.svg);
+  background-position: right center;
+  background-repeat: no-repeat;
+}
+.nav-right-list {
+  width: 427px;
+  min-height: 70px;
+  padding: 10px;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.nav-left-link {
+  padding: 13px 20px;
+  font-size: 16px;
+  line-height: 16px;
+  color: #666;
+}
+.nav-right-btn {
+  margin-right: 10px;    /*что бы кнопки не слипались при переполнении*/
+}
+                                  /* offert */
+.offers-list {
+  flex-wrap: wrap;
+}
+.offers-item {
+  width: 573px;
+}
+.offers-item:not(:last-child) {
+  margin-right: 23px;
+}
+.offers-inset-item {
+  width: 100%;
+  min-height: 258px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 15px;
+}
+.offers-inset-item:not(:last-child) {
+  margin-bottom: 23px;
+}
+.offers-item-1 {
+  background: url(../img/Offers1.jpg);
+}
+.offers-item-2 {
+  background-image: url(../img/Offers2.jpg);
+}
+.offers-item-3 {
+  min-height: 540px;
+  margin-right: 0;
+  flex-direction: column;
+  justify-content: flex-end;
+  background-image: url(../img/Offers3.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 15px;
+}
+.offers-article {
+  width: 100%;
+  height: 100%;
+  padding: 40px;
+  padding-right: 234px;
+}
+.offers-article-3 {
+  padding: 40px;
+  padding-top: 211px;
+}
+.offers-caption {
+  margin-bottom: 15px;
+  font-weight: bold;
+  font-size: 40px;
+  line-height: 40px;
+  color: #FFF;
+}
+.offers-caption-3 {
+  font-size: 60px;
+  line-height: 60px;
+}
+.offers-price {
+  margin-bottom: 47px;
+  font-size: 20px;
+  line-height: 20px;
+  color: #FFF;
+}
+.offers-price-3 {
+  font-size: 30px;
+  line-height: 30px;
+}
+.offers-link {
+  padding-right: 14px;
+  font-size: 16px;
+  line-height: 16px;
+  color: #FFCC66;
+  background-image: url(../img/Offers-arrow.svg);
+  background-position: right center;
+  background-repeat: no-repeat;
+}
+.offers-link::after {      /*растягиваем ссылку*/
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+}
+                                  /* about */
+.container-about {
+  width: 888px;
+}
+.heading-about {
+  margin-bottom: 11px;
+}
+                            /* services */
+.services-list {
+  flex-wrap: wrap;
+}
+.services-item {
+  width: 573px;
+  min-height: 330px;
+  margin-bottom: 23px;
+  padding: 191px 126px 50px 45px;
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-size: 573px 165px;
+  background-color: #FFF;
+  border-radius: 15px;
+
+}
+.services-item:not(:nth-child(2n)) {
+  margin-right: 23px;
+}
+.services-item-1 {
+  background-image: url(../img/Services1.jpg);
+}
+.services-item-2 {
+  background-image: url(../img/Services2.jpg);
+}
+.services-item-3 {
+  background-image: url(../img/Services3.jpg);
+}
+.services-item-4 {
+  background-image: url(../img/Services4.jpg);
+}
+.services-link {
+  padding-right: 16px;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 200%;
+  color: #CC9933;
+  background-image: url(../img/Services-arrow.svg);
+  background-position: right center;
+  background-repeat: no-repeat;
+}
+                            /* advantage */
+.advantages-heading {
+  margin-bottom: 20px;
+}
+.advantages-li {
+  flex-wrap: wrap;
+}
+.advantages-item {
+  width: 275px;
+  min-height: 275px;
+  margin-bottom: 23px;
+  padding: 40px;
+  border-radius: 15px;
+  background-color: #FFF;
+}
+.advantages-item:not(:nth-child(4n)) {
+  margin-right: 23px;
+}
+.advantages-item-container {
+  padding-top: 74px;
+  background-position: left top;
+  background-repeat: no-repeat;
+
+}
+.advantages-item-container-1 {
+  background-image: url(../img/Advantages1.svg);
+}
+.advantages-item-container-2 {
+  background-image: url(../img/Advantages2.svg);
+}
+.advantages-item-container-3 {
+  background-image: url(../img/Advantages3.svg);
+}
+.advantages-item-container-4 {
+  background-image: url(../img/Advantages4.svg);
+}
+.advantages-item-container-5 {
+  background-image: url(../img/Advantages5.svg);
+}
+.advantages-item-container-6 {
+  background-image: url(../img/Advantages6.svg);
+}
+.advantages-item-container-7 {
+  background-image: url(../img/Advantages7.svg);
+}
+.advantages-item-container-8 {
+  background-image: url(../img/Advantages8.svg);
+}
+
+                                /* placement */
+.placement-heading {
+  margin-bottom: 30px;
+}
+.placement-lis {
+  flex-wrap: wrap;
+}
+.placement-item {
+  width: 374px;
+  min-height: 440px;
+  margin-bottom: 23px;
+  background-color: #FFF;
+  border-radius: 15px;
+  overflow: hidden;
+}
+.placement-item:not(:nth-child(3n)) {
+  margin-right: 23px;
+}
+.placement-img {
+  height: 217px;
+  object-fit: cover;
+}
+.placement-item-container {
+  min-height: 223px;
+  padding: 45px;
+  padding-top: 36px;
+  padding-bottom: 41px;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.placement-item-description {
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.item-description-prev {
+  font-size: 16px;
+  line-height: 16px;
+  color: #999;
+}
+.item-description-price {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 20px;
+}
+.item-description-fin {
+  font-size: 16px;
+  line-height: 16px;
+}
+.item-description-name {
+  margin-bottom: 16px;
+  font-size: 16px;
+  line-height: 16px;
+}
+.item-description-location {
+  margin-bottom: 20px;
+  font-size: 16px;
+  line-height: 16px;
+  color: #999;
+}
+.placement-item-rooms {
+  align-self: flex-start;
+}
+.placement-item-last {
+  position: relative;
+  padding: 27px 50px;
+  order: 999;             /*эта кароточка всегда будет последней*/
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  background-image: url(../img/Placement9.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.placement-item-last-link {
+  padding: 10px;
+  padding-right: 14px;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 200%;
+  color: #FFF;
+  background-image: url(../img/Placement_arrow.svg);
+  background-position: right center;
+  background-repeat: no-repeat;
+}
+.placement-item-last-link::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+}
+                                    /*booking*/
+.booking-container {
+  width: 1170px;
+  min-height: 274px;
+  padding: 0;
+  padding-top: 38px;
+  background: #E9E9E9;
+  border-radius: 15px;
+}
+.booking-form {
+  width: 1080px;
+  min-height: 106px;
+  margin-left: 45px;
+  margin-right: 45px;
+  padding: 30px 24px;
+  align-items: center;
+  justify-content: space-around;
+  background: #FFFFFF;
+  border-radius: 15px;
+}
+.booking-fieldset {
+  height: 50px;
+  padding-right: 20px;
+  border-right: 1px solid #E1E1E1;
+}
+.booking-fieldset-long {
+  width: 189px;
+}
+.booking-fieldset-short {
+  width: 162px;
+}
+.booking-fieldset-legend {
+  font-size: 12px;
+  line-height: 12px;
+  margin-bottom: 15px;
+}
+.booking-fieldset select {
+  width: 100%;
+  font-size: 16px;
+  line-height: 16px;
+}
+.booking-fieldset input {
+  width: 100%;
+  font-size: 16px;
+  line-height: 20px;
+}
+.booking-fieldset input[type="number"] {
+  border-bottom: 1px solid #E1E1E1;
+}
+                      /*cotacts*/
+.section-contakts {
+  margin-bottom: 19px;
+}
+.contact-container {
+  width: 1168px;
+  padding: 0;
+}
+.contacts-address {
+  padding: 45px;
+  background: #FFF;
+  border-radius: 15px;
+}
+.contacts-left {
+  width: 375px;
+  min-height: 528;
+  margin-right: 50px;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.contacts-right {
+  width: 653px;
+  min-height: 528px;
+  background-image: url(../img/Contacts.jpg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 10px;
+}
+.contacts-list {
+  flex-direction: column;
+}
+.contacts-item {
+  width: 100%;
+  padding-bottom: 23px;
+  margin-bottom: 25px;
+  border-bottom: 1px solid #C4C4C4;;
+}
+.contacts-title {
+  width: 145px;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 20px;
+}
+.contacts-item p {
+  font-size: 16px;
+  line-height: 150%;
+}
+/* .contacts-phones {
+  flex-direction: column;
+} */
+.contacts-phones a {
+  font-size: 16px;
+  line-height: 150%;
+  color: #CC9933;
+}
+/* .contacts-email {
+  flex-direction: column;
+} */
+.contacts-email a {
+  font-size: 16px;
+  line-height: 150%;
+  color: #CC9933;
+}
+.contacts-email p {
+  font-size: 16px;
+  line-height: 150%;
+  color: #999999;
+}
+.contacts-btn {
+  max-width: 250px;
+  padding: 27px 29px;
+}
+                              /*footer*/
+.footer-container {
+  width: 1168px;
+  min-height: 341px;
+  padding-top: 51px;
+  padding-left: 51px;
+  padding-right: 51px;
+  background: #333333;
+  border-radius: 15px;
+  background-image: url(../img/Footer-logo.svg);
+  background-position: 80% bottom;
+  background-repeat: no-repeat;
+  background-size: 254px 228px;
+}
+.footer-left {
+  width: 320px;
+  margin-right: 102px;
+}
+.footer-left p {
+  margin-bottom: 40px;
+  font-size: 16px;
+  line-height: 190%;
+  color: #FFFFFF;
+}
+.footer-left a {
+  font-size: 16px;
+  line-height: 150%;
+  color: #CC9933;
+}
+.footer-center {
+  width: 358px;
+  margin-right: auto;
+}
+.footer-center p {
+  margin-bottom: 14px;
+  font-size: 16px;
+  line-height: 16px;
+  color: #FFFFFF;
+}
+.footer-phones {
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+.footer-phones a {
+  font-size: 16px;
+  line-height: 150%;
+  color: #CC9933;
+}
+.footer-mail {
+  flex-direction: column;
+}
+.footer-mail a {
+  font-size: 16px;
+  line-height: 150%;
+  color: #CC9933;
+}
+.footer-right {
+  width: 25px;
+  height: 205px;
+}
+.footer-social-list {
+  width: 100%;
+  height: 100%;
+}
+.social-item:not(:last-child) {
+  margin-bottom: 20px;
+}
+.social-link {
+  display: block;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.social-icon {
+  transition:
+  background-color var(--duration) var(--function),
+  fill  var(--duration) var(--function);
+}
+.social-link:hover .social-icon {
+  background-color: #E9E9E9;
+}
+.social-link:hover .social-icon path {
+  fill: var(--color-hover);
+}
+.social-link:focus .social-icon {
+  background-color: #E9E9E9;
+}
+.social-link:focus .social-icon path {
+  fill: var(--color-focus);
+}
+.social-link:active .social-icon {
+  background-color: #FFF;
+}
+.social-link:active .social-icon path {
+  fill: var(--color-active);
+}
